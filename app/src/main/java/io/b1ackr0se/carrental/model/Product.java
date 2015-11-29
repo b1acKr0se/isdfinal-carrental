@@ -6,18 +6,13 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
-@ParseClassName("Product")
-public class Product extends ParseObject {
+public class Product{
     private int id;
     private String name;
     private String description;
     private String image;
     private int price;
     private int category;
-
-    public Product() {
-        super();
-    }
 
     public Product(int id, String name, String desc, String image, int price, int category) {
         super();
@@ -30,30 +25,31 @@ public class Product extends ParseObject {
     }
 
     public int getId() {
-        return getInt("productId");
+        return id;
     }
 
     public String getName() {
-        return getString("Name");
+        return name;
     }
 
     public String getDescription() {
-        return getString("Description");
+        return description;
     }
 
     public String getImage() {
-        ParseFile imageFile = getParseFile("Image");
-        String imageUrl = imageFile.getUrl();
-        Uri imageUri = Uri.parse(imageUrl);
-        return imageUri.toString();
+//        ParseFile imageFile = getParseFile("Image");
+//        String imageUrl = imageFile.getUrl();
+//        Uri imageUri = Uri.parse(imageUrl);
+//        return imageUri.toString();
+        return image;
     }
 
     public int getPrice() {
-        return getInt("Price");
+        return price;
     }
 
     public int getCategory() {
-        return getInt("CategoryId");
+        return category;
     }
 
 }
