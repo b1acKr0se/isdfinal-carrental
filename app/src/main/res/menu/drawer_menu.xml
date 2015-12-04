@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/category"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_explore"
+            android:checked="true"
+            android:icon="@drawable/ic_car_grey600_24dp"
+            android:title="Explore" />
+
+        <item
+            android:id="@+id/drawer_favorite"
+            android:icon="@drawable/ic_heart_grey600_24dp"
+            android:title="Favorite" />
+
+        <item
+            android:id="@+id/drawer_cart"
+            android:icon="@drawable/ic_cart_grey600_24dp"
+            android:title="Cart" />
+
+        <item
+            android:id="@+id/drawer_logout"
+            android:icon="@drawable/ic_logout_grey600_24dp"
+            android:title="Logout" />
+
+    </group>
+
+    <item
+        android:id="@+id/drawer_settings"
+        android:icon="@drawable/ic_settings_grey600_24dp"
+        android:title="Settings" />
+</menu>

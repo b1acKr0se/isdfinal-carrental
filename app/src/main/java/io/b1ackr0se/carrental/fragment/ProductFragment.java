@@ -65,6 +65,8 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                 bundle.putSerializable("product", product);
                 intent.putExtra("product", bundle);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+
             }
         });
 
@@ -90,7 +92,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                         Product product = new Product();
                         product.setId(id);
                         product.setName(name);
-                        product.setDescription(description);
+                        product.setDescription(description.replaceAll("(?m)^[ \t]*\r?\n", ""));
                         product.setPrice(price);
                         product.setCategory(category);
                         products.add(product);

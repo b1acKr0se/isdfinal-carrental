@@ -23,4 +23,21 @@
         <item name="actionMenuTextColor">#fff</item>
     </style>
 
+    <style name="FABStyle">
+        <item name="android:layout_margin">16dp</item>
+        <item name="pressedTranslationZ">12dp</item>
+        <item name="borderWidth">0dp</item>
+        <item name="rippleColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+
+
 </resources>
