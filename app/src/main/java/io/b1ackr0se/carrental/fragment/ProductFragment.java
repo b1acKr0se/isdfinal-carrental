@@ -2,16 +2,21 @@ package io.b1ackr0se.carrental.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 
 import com.etsy.android.grid.StaggeredGridView;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -23,16 +28,19 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.b1ackr0se.carrental.R;
 import io.b1ackr0se.carrental.activity.MainActivity;
-import io.b1ackr0se.carrental.adapter.ProductAdapter;
+import io.b1ackr0se.carrental.activity.ProductDetailActivity;
+import io.b1ackr0se.carrental.adapter.ProductListAdapter;
 import io.b1ackr0se.carrental.model.Product;
 
-public class ProductFragment extends Fragment {
+public class ProductFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     @Bind(R.id.grid_view)StaggeredGridView staggeredGridView;
 
     private Context context;
     private ArrayList<Product> products;
-    private ProductAdapter adapter;
+    private ProductListAdapter adapter;
+
+    int count = 0;
 
     public ProductFragment() {
     }
@@ -48,20 +56,15 @@ public class ProductFragment extends Fragment {
 
         loadProduct();
 
-        staggeredGridView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            private int mLastFirstVisibleItem;
+        staggeredGridView.setOnItemClickListener(new AbsListView.OnItemClickListener() {
             @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-                if (mLastFirstVisibleItem < firstVisibleItem)
-                    ((MainActivity) context).hideFab();
-                if (mLastFirstVisibleItem > firstVisibleItem)
-                    ((MainActivity) context).showFab();
-                mLastFirstVisibleItem = firstVisibleItem;
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Product product = products.get(i);
+                Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("product", product);
+                intent.putExtra("product", bundle);
+                startActivity(intent);
             }
         });
 
@@ -69,35 +72,66 @@ public class ProductFragment extends Fragment {
     }
 
     private void loadProduct() {
+        count = 0;
         ((MainActivity) context).showLoading();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Product");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
-                    ((MainActivity) context).hideLoading(false);
                     products = new ArrayList<>();
-                    System.out.println("Number of object " + objects.size());
                     for (int i = 0; i < objects.size(); i++) {
                         ParseObject object = objects.get(i);
                         int id = object.getInt("productId");
                         String name = object.getString("Name");
                         String description = object.getString("Description");
-                        String image = object.getParseFile("Image").getUrl();
-                        String imageUrl = Uri.parse(image).toString();
                         int price = object.getInt("Price");
                         int category = object.getInt("CategoryId");
-                        Product product = new Product(id, name, description, imageUrl, price, category);
+                        Product product = new Product();
+                        product.setId(id);
+                        product.setName(name);
+                        product.setDescription(description);
+                        product.setPrice(price);
+                        product.setCategory(category);
                         products.add(product);
                     }
-                    adapter = new ProductAdapter(context, R.layout.item_product, products);
-                    staggeredGridView.setAdapter(adapter);
+                    for (int i = 0; i < products.size(); i++) {
+                        final int j = i;
+                        ParseQuery<ParseObject> getImageQuery = ParseQuery.getQuery("Image");
+                        getImageQuery.whereEqualTo("ProductId", products.get(i).getId()).findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List<ParseObject> objects, ParseException e) {
+                                if(e==null) {
+                                    ArrayList<String> list = new ArrayList<>();
+                                    for (int i = 0; i < objects.size(); i++) {
+                                        String image = objects.get(i).getParseFile("File").getUrl();
+                                        String imageUrl = Uri.parse(image).toString();
+                                        list.add(imageUrl);
+                                    }
+                                    products.get(j).setImages(list);
+                                    count++;
+                                    if (count == products.size()) {
+                                        adapter = new ProductListAdapter(context, R.layout.item_product, products);
+                                        staggeredGridView.setAdapter(adapter);
+                                        ((MainActivity) context).hideLoading(false);
+                                        staggeredGridView.setVisibility(View.VISIBLE);
+                                    }
+                                } else {
+                                    ((MainActivity) context).hideLoading(true);
+                                }
+                            }
+                        });
+                    }
                 } else {
-                    e.printStackTrace();
                     ((MainActivity) context).hideLoading(true);
                 }
             }
         });
+
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
 }
