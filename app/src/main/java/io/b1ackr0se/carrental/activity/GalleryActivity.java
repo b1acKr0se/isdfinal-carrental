@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.b1ackr0se.carrental.R;
 import io.b1ackr0se.carrental.adapter.PreviewAdapter;
 import io.b1ackr0se.carrental.model.Product;
@@ -21,7 +19,7 @@ public class GalleryActivity extends Activity {
     @Bind(R.id.name)TextView nameTextView;
     @Bind(R.id.page)TextView pageTextView;
     @Bind(R.id.view_pager)ViewPager viewPager;
-    @Bind(R.id.close_button)ImageView closeButton;
+    @Bind(R.id.close_button)View closeButton;
 
     private Product product;
 

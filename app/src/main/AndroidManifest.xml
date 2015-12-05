@@ -53,13 +53,15 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
+                <!-- IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
                 <category android:name="io.b1ackr0se.carrental" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.GalleryActivity"
-            android:theme="@style/Theme.Transparent"/>
+        <activity
+            android:name=".activity.GalleryActivity"
+            android:theme="@style/Theme.Transparent" />
+        <activity android:name=".activity.LoginActivity"></activity>
     </application>
 
 </manifest>

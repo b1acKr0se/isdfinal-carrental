@@ -36,13 +36,4 @@
         android:text="Welcome, Hai"
         android:visibility="invisible"/>
 
-    <TextView
-        android:id="@+id/loginText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_margin="16dp"
-        android:textColor="@android:color/white"/>
-
 </FrameLayout>

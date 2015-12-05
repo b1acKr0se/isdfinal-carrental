@@ -56,6 +56,55 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer_menu"/>
+        app:menu="@menu/drawer_menu">
+
+        <LinearLayout
+            android:id="@+id/login_control"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1.0"
+            android:layout_gravity="bottom">
+            <TextView
+                android:id="@+id/loginButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:text="LOGIN"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_weight="0.5"
+                android:clickable="true"
+                android:background="@drawable/login_button"
+                android:foreground="?android:attr/selectableItemBackground"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="60dp"
+                android:background="@android:color/white"/>
+            <TextView
+                android:id="@+id/registerButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:text="REGISTER"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_weight="0.5"
+                android:clickable="true"
+                android:background="@drawable/login_button"
+                android:foreground="?android:attr/selectableItemBackground"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="LOGOUT"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:clickable="true"
+            android:background="@drawable/login_button"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_gravity="bottom"/>
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
