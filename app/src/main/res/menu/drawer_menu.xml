@@ -22,9 +22,34 @@
             android:title="Cart" />
 
         <item
-            android:id="@+id/drawer_logout"
-            android:icon="@drawable/ic_logout_grey600_24dp"
-            android:title="Logout" />
+            android:id="@+id/drawer_manage_product"
+            android:icon="@drawable/ic_car_grey600_24dp"
+            android:title="Manage products"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/drawer_manage_user"
+            android:icon="@drawable/ic_account_multiple_grey600_24dp"
+            android:title="Manage users"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/drawer_manage_category"
+            android:icon="@drawable/ic_folder_multiple_grey600_24dp"
+            android:title="Manage categories"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/drawer_manage_orders"
+            android:icon="@drawable/ic_cart_grey600_24dp"
+            android:title="View orders"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/drawer_view_report"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="View reports"
+            android:visible="false"/>
 
     </group>
 

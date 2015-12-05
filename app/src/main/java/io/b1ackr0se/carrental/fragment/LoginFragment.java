@@ -89,6 +89,8 @@ public class LoginFragment extends Fragment {
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("email", email);
                     returnIntent.putExtra("name", object.getString("userName"));
+                    returnIntent.putExtra("id", object.getString("objectId"));
+                    returnIntent.putExtra("type", object.getInt("Type"));
                     getActivity().setResult(Activity.RESULT_OK, returnIntent);
                     getActivity().finish();
                 } else {

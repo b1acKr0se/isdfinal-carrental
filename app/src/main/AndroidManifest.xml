@@ -61,7 +61,7 @@
         <activity
             android:name=".activity.GalleryActivity"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.LoginActivity" />
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private static final String LOGIN_CREDENTIALS = "login_credentials";
 
+    private int userType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(LOGIN_CREDENTIALS, MODE_PRIVATE);
 
         CustomApplication.isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+
+        userType = sharedPreferences.getInt("type", -1);
 
         setupDrawerLayout();
 
@@ -85,9 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (savedInstanceState == null) {
-            loadProduct();
-        }
+        setLayout(userType);
     }
 
     private void setTitle(String title) {
@@ -143,8 +146,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.drawer_cart:
                         break;
-                    case R.id.drawer_logout:
-                        break;
                     case R.id.drawer_settings:
 //                        new Handler().postDelayed(new Runnable() {
 //                            @Override
@@ -191,13 +192,17 @@ public class MainActivity extends AppCompatActivity {
 
                 String name = data.getStringExtra("name");
                 String email = data.getStringExtra("email");
+                String id = data.getStringExtra("id");
+                int type = data.getIntExtra("type", CustomApplication.TYPE_USER);
 
                 View headerView = navigationView.getHeaderView(0);
                 TextView nameTextView = (TextView) headerView.findViewById(R.id.name);
                 nameTextView.setText("Welcome, " + name);
                 nameTextView.setVisibility(View.VISIBLE);
 
-                saveCredentials(name, email);
+                saveCredentials(name, email, id, type);
+
+                setLayout(type);
 
                 loginControl.setVisibility(View.GONE);
                 logoutButton.setVisibility(View.VISIBLE);
@@ -210,10 +215,12 @@ public class MainActivity extends AppCompatActivity {
         return sharedPreferences.getString("name", null);
     }
 
-    private void saveCredentials(String name, String email) {
+    private void saveCredentials(String name, String email, String id, int type) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("name", name);
         editor.putString("email", email);
+        editor.putString("id", id);
+        editor.putInt("type", type);
         editor.putBoolean("isLoggedIn", true);
         editor.apply();
     }
@@ -222,7 +229,47 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("name");
         editor.remove("email");
+        editor.remove("id");
+        editor.remove("type");
         editor.putBoolean("isLoggedIn", false);
         editor.apply();
+    }
+
+    private void setLayout(int type) {
+        Menu menu = navigationView.getMenu();
+        switch (type) {
+            case CustomApplication.TYPE_USER:
+                menu.findItem(R.id.drawer_explore).setVisible(true);
+                menu.findItem(R.id.drawer_favorite).setVisible(true);
+                menu.findItem(R.id.drawer_cart).setVisible(true);
+                menu.findItem(R.id.drawer_manage_product).setVisible(false);
+                menu.findItem(R.id.drawer_manage_orders).setVisible(false);
+                menu.findItem(R.id.drawer_manage_category).setVisible(false);
+                menu.findItem(R.id.drawer_manage_orders).setVisible(false);
+                menu.findItem(R.id.drawer_view_report).setVisible(false);
+                loadProduct();
+                break;
+            case CustomApplication.TYPE_ADMIN:
+                menu.findItem(R.id.drawer_explore).setVisible(false);
+                menu.findItem(R.id.drawer_favorite).setVisible(false);
+                menu.findItem(R.id.drawer_cart).setVisible(false);
+                menu.findItem(R.id.drawer_manage_product).setVisible(true);
+                menu.findItem(R.id.drawer_manage_orders).setVisible(true);
+                menu.findItem(R.id.drawer_manage_category).setVisible(true);
+                menu.findItem(R.id.drawer_manage_orders).setVisible(true);
+                menu.findItem(R.id.drawer_view_report).setVisible(true);
+                break;
+            default:
+                menu.findItem(R.id.drawer_explore).setVisible(true);
+                menu.findItem(R.id.drawer_favorite).setVisible(false);
+                menu.findItem(R.id.drawer_cart).setVisible(false);
+                menu.findItem(R.id.drawer_manage_product).setVisible(false);
+                menu.findItem(R.id.drawer_manage_orders).setVisible(false);
+                menu.findItem(R.id.drawer_manage_category).setVisible(false);
+                menu.findItem(R.id.drawer_manage_orders).setVisible(false);
+                menu.findItem(R.id.drawer_view_report).setVisible(false);
+                loadProduct();
+                break;
+        }
     }
 }

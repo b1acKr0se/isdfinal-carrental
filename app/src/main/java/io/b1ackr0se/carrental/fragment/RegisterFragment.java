@@ -76,7 +76,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private void register(final String name, final String email, String password, String address, String phone) {
-        ParseObject object = new ParseObject("User");
+        final ParseObject object = new ParseObject("User");
         object.put("userName", name);
         object.put("Password", password);
         object.put("Email", email);
@@ -89,10 +89,13 @@ public class RegisterFragment extends Fragment {
             public void done(ParseException e) {
                 if (progressDialog.isShowing()) progressDialog.dismiss();
                 if (e == null) {
+                    String id = object.getObjectId();
                     Utility.showMessage(context, "Your account has been created!");
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("email", email);
                     returnIntent.putExtra("name", name);
+                    returnIntent.putExtra("id", id);
+                    returnIntent.putExtra("type", CustomApplication.TYPE_USER);
                     getActivity().setResult(Activity.RESULT_OK, returnIntent);
                     getActivity().finish();
                 } else {
