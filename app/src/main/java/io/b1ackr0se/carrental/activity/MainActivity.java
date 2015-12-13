@@ -22,6 +22,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.b1ackr0se.carrental.R;
 import io.b1ackr0se.carrental.application.CustomApplication;
+import io.b1ackr0se.carrental.fragment.AdminProductFragment;
+import io.b1ackr0se.carrental.fragment.CustomerOrderFragment;
+import io.b1ackr0se.carrental.fragment.FavoriteFragment;
+import io.b1ackr0se.carrental.fragment.ManageUserFragment;
 import io.b1ackr0se.carrental.fragment.ProductFragment;
 import io.b1ackr0se.carrental.util.Utility;
 
@@ -40,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private static final String LOGIN_CREDENTIALS = "login_credentials";
 
-    private int userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
         CustomApplication.isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
-        userType = sharedPreferences.getInt("type", -1);
+        CustomApplication.userType = sharedPreferences.getInt("type", -1);
+
+        CustomApplication.userId = sharedPreferences.getString("id", null);
 
         setupDrawerLayout();
 
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setLayout(userType);
+        setLayout(CustomApplication.userType);
     }
 
     private void setTitle(String title) {
@@ -106,6 +111,42 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.content, fragment);
         fragmentTransaction.commit();
         setTitle("Products");
+    }
+
+    private void loadCustomerOrder() {
+        CustomerOrderFragment fragment = new CustomerOrderFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content, fragment);
+        fragmentTransaction.commit();
+        setTitle("Order");
+    }
+
+    private void loadFavorite() {
+        FavoriteFragment fragment = new FavoriteFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content, fragment);
+        fragmentTransaction.commit();
+        setTitle("Favorite");
+    }
+
+    private void loadAdminProduct() {
+        AdminProductFragment fragment = new AdminProductFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content, fragment);
+        fragmentTransaction.commit();
+        setTitle("Product");
+    }
+
+    private void loadUserList() {
+        ManageUserFragment fragment = new ManageUserFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content, fragment);
+        fragmentTransaction.commit();
+        setTitle("Users");
     }
 
     public void showLoading() {
@@ -143,8 +184,10 @@ public class MainActivity extends AppCompatActivity {
                         loadProduct();
                         break;
                     case R.id.drawer_favorite:
+                        loadUserList();
                         break;
                     case R.id.drawer_cart:
+                        loadCustomerOrder();
                         break;
                     case R.id.drawer_settings:
 //                        new Handler().postDelayed(new Runnable() {
@@ -216,6 +259,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveCredentials(String name, String email, String id, int type) {
+        CustomApplication.isLoggedIn = true;
+        CustomApplication.userType = type;
+        CustomApplication.userId = id;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("name", name);
         editor.putString("email", email);
@@ -223,9 +269,13 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("type", type);
         editor.putBoolean("isLoggedIn", true);
         editor.apply();
+
     }
 
     private void removeCredentials() {
+        CustomApplication.userType = -1;
+        CustomApplication.userId = null;
+        CustomApplication.isLoggedIn = false;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("name");
         editor.remove("email");

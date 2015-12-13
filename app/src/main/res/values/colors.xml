@@ -4,9 +4,15 @@
     <color name="colorPrimaryDark">#455A64</color>
     <color name="colorAccent">#990000</color>
     <color name="transparent">#de000000</color>
-
+    <color name="red">#d60000</color>
     <color name="divider">#c1c1c1</color>
 
     <color name="price_color">#f54627</color>
+
+    <color name="divider_color">#e4e4e4</color>
+
+    <color name="grey_translucent">#78BDBDBD</color>
+
+
 
 </resources>

@@ -7,9 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -56,6 +58,16 @@ public class LoginFragment extends Fragment {
                 validate();
             }
         });
+
+        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    validate();
+                }
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -89,7 +101,7 @@ public class LoginFragment extends Fragment {
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("email", email);
                     returnIntent.putExtra("name", object.getString("userName"));
-                    returnIntent.putExtra("id", object.getString("objectId"));
+                    returnIntent.putExtra("id", object.getObjectId());
                     returnIntent.putExtra("type", object.getInt("Type"));
                     getActivity().setResult(Activity.RESULT_OK, returnIntent);
                     getActivity().finish();

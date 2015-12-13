@@ -80,6 +80,41 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/favorite_panel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:layout_gravity="end">
+
+                        <TextView
+                            android:id="@+id/favorite_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingRight="4dp"
+                            android:text="Add to favorite"
+                            android:gravity="center"
+                            android:textSize="18sp"/>
+
+                        <ImageView
+                            android:id="@+id/favorite_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/star_unfav"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider_color"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="8dp"
+                        />
+
                     <TextView
                         android:id="@+id/description"
                         android:layout_width="match_parent"

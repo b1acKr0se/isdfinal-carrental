@@ -6,10 +6,11 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
+import java.io.Closeable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Product implements Serializable {
+public class Product implements Serializable, Cloneable {
     private int id;
     private String name;
     private String description;
@@ -81,5 +82,10 @@ public class Product implements Serializable {
 
     public void setCategory(int category) {
         this.category = category;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

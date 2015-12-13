@@ -12,6 +12,8 @@ public class CustomApplication extends Application {
     public static final int STATUS_BANNED = 1;
 
     public static boolean isLoggedIn = false;
+    public static int userType = -1;
+    public static String userId;
 
     @Override
     public void onCreate() {

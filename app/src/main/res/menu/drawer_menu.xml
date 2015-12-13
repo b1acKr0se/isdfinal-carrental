@@ -19,7 +19,7 @@
         <item
             android:id="@+id/drawer_cart"
             android:icon="@drawable/ic_cart_grey600_24dp"
-            android:title="Cart" />
+            android:title="Order" />
 
         <item
             android:id="@+id/drawer_manage_product"

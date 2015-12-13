@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -16,7 +18,6 @@ import android.widget.AdapterView;
 
 import com.etsy.android.grid.StaggeredGridView;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -32,7 +33,7 @@ import io.b1ackr0se.carrental.activity.ProductDetailActivity;
 import io.b1ackr0se.carrental.adapter.ProductListAdapter;
 import io.b1ackr0se.carrental.model.Product;
 
-public class ProductFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class ProductFragment extends Fragment {
 
     @Bind(R.id.grid_view)StaggeredGridView staggeredGridView;
 
@@ -40,7 +41,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     private ArrayList<Product> products;
     private ProductListAdapter adapter;
 
-    int count = 0;
+    private int count = 0;
 
     public ProductFragment() {
     }
@@ -54,12 +55,14 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
         context = getActivity();
 
+        setHasOptionsMenu(true);
+
         loadProduct();
 
         staggeredGridView.setOnItemClickListener(new AbsListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Product product = products.get(i);
+                Product product = adapter.getItem(i);
                 Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("product", product);
@@ -103,7 +106,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                         getImageQuery.whereEqualTo("ProductId", products.get(i).getId()).findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> objects, ParseException e) {
-                                if(e==null) {
+                                if (e == null) {
                                     ArrayList<String> list = new ArrayList<>();
                                     for (int i = 0; i < objects.size(); i++) {
                                         String image = objects.get(i).getParseFile("File").getUrl();
@@ -132,8 +135,31 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_product_list, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView actionSearchView = (SearchView) searchItem.getActionView();
+        actionSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+        });
+
+        actionSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                adapter.getFilter().filter("");
+                return false;
+            }
+        });
     }
 }
