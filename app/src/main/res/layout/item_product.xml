@@ -28,7 +28,7 @@
             android:paddingTop="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:fontFamily="sans-serif"
+            android:fontFamily="sans-serif-condensed"
             android:textSize="20sp"
             android:textColor="@android:color/black"
             android:text="Something something"/>
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:textSize="14sp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/colorAccent"
                 android:text="1.120.000 VND"/>
         </LinearLayout>

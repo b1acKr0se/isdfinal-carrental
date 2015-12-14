@@ -32,7 +32,9 @@ import io.b1ackr0se.carrental.fragment.CustomerOrderFragment;
 import io.b1ackr0se.carrental.fragment.FavoriteFragment;
 import io.b1ackr0se.carrental.fragment.ManageOrderFragment;
 import io.b1ackr0se.carrental.fragment.ManageUserFragment;
+import io.b1ackr0se.carrental.fragment.NotificationFragment;
 import io.b1ackr0se.carrental.fragment.ProductFragment;
+import io.b1ackr0se.carrental.fragment.ReportFragment;
 import io.b1ackr0se.carrental.util.Utility;
 
 public class MainActivity extends AppCompatActivity {
@@ -153,6 +155,15 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Products");
     }
 
+    private void loadNotification() {
+        NotificationFragment fragment = new NotificationFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content, fragment);
+        fragmentTransaction.commit();
+        setTitle("Notifications");
+    }
+
     private void loadCustomerOrder() {
         CustomerOrderFragment fragment = new CustomerOrderFragment();
         FragmentManager fragmentManager = getFragmentManager();
@@ -198,6 +209,15 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Orders");
     }
 
+    private void loadReport() {
+        ReportFragment fragment = new ReportFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content, fragment);
+        fragmentTransaction.commit();
+        setTitle("Report for this week");
+    }
+
     public void showLoading() {
         progressBar.setVisibility(View.VISIBLE);
         emptyView.setVisibility(View.INVISIBLE);
@@ -232,31 +252,35 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.drawer_explore:
                         loadProduct();
                         break;
+                    case R.id.drawer_notification:
+                        loadNotification();
+                        break;
+
                     case R.id.drawer_favorite:
                         loadFavorite();
                         break;
+
                     case R.id.drawer_cart:
                         loadCustomerOrder();
                         break;
+
                     case R.id.drawer_settings:
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
-//                                startActivity(intent);
-//                            }
-//                        }, 200);
                         break;
+
                     case R.id.drawer_manage_user:
                         loadUserList();
                         break;
+
                     case R.id.drawer_manage_product:
                         loadAdminProduct();
                         break;
+
                     case R.id.drawer_manage_orders:
                         loadManageOrder();
                         break;
-                    case R.id.drawer_manage_category:
+
+                    case R.id.drawer_view_report:
+                        loadReport();
                         break;
 
                 }
@@ -315,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String getLoggedInName() {
+    public String getLoggedInName() {
         return sharedPreferences.getString("name", null);
     }
 
@@ -353,9 +377,9 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.drawer_explore).setVisible(true);
                 menu.findItem(R.id.drawer_favorite).setVisible(true);
                 menu.findItem(R.id.drawer_cart).setVisible(true);
+                menu.findItem(R.id.drawer_notification).setVisible(true);
                 menu.findItem(R.id.drawer_manage_product).setVisible(false);
                 menu.findItem(R.id.drawer_manage_user).setVisible(false);
-                menu.findItem(R.id.drawer_manage_category).setVisible(false);
                 menu.findItem(R.id.drawer_manage_orders).setVisible(false);
                 menu.findItem(R.id.drawer_view_report).setVisible(false);
                 loadProduct();
@@ -364,9 +388,9 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.drawer_explore).setVisible(false);
                 menu.findItem(R.id.drawer_favorite).setVisible(false);
                 menu.findItem(R.id.drawer_cart).setVisible(false);
+                menu.findItem(R.id.drawer_notification).setVisible(false);
                 menu.findItem(R.id.drawer_manage_product).setVisible(true);
                 menu.findItem(R.id.drawer_manage_user).setVisible(true);
-                menu.findItem(R.id.drawer_manage_category).setVisible(true);
                 menu.findItem(R.id.drawer_manage_orders).setVisible(true);
                 menu.findItem(R.id.drawer_view_report).setVisible(true);
                 loadAdminProduct();
@@ -375,9 +399,9 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.drawer_explore).setVisible(true);
                 menu.findItem(R.id.drawer_favorite).setVisible(false);
                 menu.findItem(R.id.drawer_cart).setVisible(false);
+                menu.findItem(R.id.drawer_notification).setVisible(false);
                 menu.findItem(R.id.drawer_manage_product).setVisible(false);
                 menu.findItem(R.id.drawer_manage_user).setVisible(false);
-                menu.findItem(R.id.drawer_manage_category).setVisible(false);
                 menu.findItem(R.id.drawer_manage_orders).setVisible(false);
                 menu.findItem(R.id.drawer_view_report).setVisible(false);
                 loadProduct();

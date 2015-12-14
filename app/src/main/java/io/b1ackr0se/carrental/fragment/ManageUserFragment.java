@@ -197,6 +197,7 @@ public class ManageUserFragment extends Fragment implements ManageUserAdapter.On
                                     object.saveEventually();
                                 }
                             });
+                            sendUnbanNotification(user.getId());
                         }
                     })
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -207,5 +208,19 @@ public class ManageUserFragment extends Fragment implements ManageUserAdapter.On
                     }).build();
         }
         dialog.show();
+    }
+
+    private void sendUnbanNotification(String id) {
+        if(CustomApplication.userId != null) {
+            ParseObject object = new ParseObject("Notification");
+            object.put("SenderId", CustomApplication.userId);
+            object.put("ReceiverId", id);
+            object.put("SenderName", ((MainActivity)context).getLoggedInName());
+            object.put("Title", "System message");
+            object.put("Content", "You have been unbanned. We hope that there won't be any " +
+                    "pity events in the future.");
+            object.put("Date", System.currentTimeMillis());
+            object.saveEventually();
+        }
     }
 }

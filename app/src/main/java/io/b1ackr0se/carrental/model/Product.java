@@ -1,12 +1,5 @@
 package io.b1ackr0se.carrental.model;
 
-import android.net.Uri;
-
-import com.parse.ParseClassName;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-
-import java.io.Closeable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -87,5 +80,15 @@ public class Product implements Serializable, Cloneable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Product && this.id == ((Product) o).getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
     }
 }

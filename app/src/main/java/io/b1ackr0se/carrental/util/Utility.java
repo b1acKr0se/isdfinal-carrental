@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -47,5 +48,44 @@ public class Utility {
         DateFormat df = new SimpleDateFormat("HH:mm EEE, d MMM yyyy");
         df.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         return df.format(date);
+    }
+
+    public static String formatNotificationDate(long date) {
+        SimpleDateFormat initFormat = new SimpleDateFormat(
+                "MMM dd", Locale.US);
+        SimpleDateFormat hours = new SimpleDateFormat("HH:mm",
+                Locale.US);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        String finalDateString = initFormat.format(calendar
+                .getTime());
+        Date now = new Date();
+        String strDate = initFormat.format(now);
+        if (finalDateString.equals(strDate)) {
+            finalDateString = hours.format(calendar.getTime());
+        } else {
+            finalDateString = initFormat.format(calendar.getTime());
+        }
+        return finalDateString;
+    }
+
+    public static boolean isDateThisWeek(long time) {
+
+        Date dateInQuestion = new Date(time);
+
+        Calendar c = Calendar.getInstance();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        c.set(Calendar.HOUR, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+
+        Date monday = c.getTime();
+        Date nextMonday= new Date(monday.getTime()+7*24*60*60*1000);
+
+        return dateInQuestion.after(monday) && dateInQuestion.before(nextMonday);
+
     }
 }

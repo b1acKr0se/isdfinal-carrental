@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
+            android:fontFamily="sans-serif-condensed"
             android:inputType="textEmailAddress">
             <requestFocus />
         </EditText>
@@ -36,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:fontFamily="sans-serif-condensed"
             android:inputType="textPassword" />
 
     </android.support.design.widget.TextInputLayout>
@@ -50,6 +52,7 @@
         android:background="@drawable/login_button"
         android:gravity="center"
         android:text="LOGIN"
+        android:fontFamily="sans-serif-condensed"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>

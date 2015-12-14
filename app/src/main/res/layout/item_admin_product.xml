@@ -122,6 +122,7 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="2003 Chevrolet Suburban 1500"
+                        android:fontFamily="sans-serif-condensed"
                         android:textColor="#000000"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -131,6 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:fontFamily="sans-serif-condensed"
                         android:text="5.000.000 VND"/>
 
 

@@ -62,12 +62,14 @@
                     android:layout_height="wrap_content"
                     android:text="Bruce Wayne"
                     android:textColor="@android:color/black"
+                    android:fontFamily="sans-serif-condensed"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/user_join_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
                     android:text="Days"
                     android:textColor="#80000000"
                     android:textSize="14sp" />

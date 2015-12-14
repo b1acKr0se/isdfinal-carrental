@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context="io.b1ackr0se.carrental.fragment.LoginFragment">
 
         <android.support.design.widget.TextInputLayout
@@ -21,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Full name"
+                android:fontFamily="sans-serif-condensed"
                 android:inputType="textPersonName">
                 <requestFocus />
             </EditText>
@@ -40,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
+                android:fontFamily="sans-serif-condensed"
                 android:inputType="textEmailAddress"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -57,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                android:fontFamily="sans-serif-condensed"
                 android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>
@@ -74,6 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Address"
+                android:fontFamily="sans-serif-condensed"
                 android:inputType="text" />
 
         </android.support.design.widget.TextInputLayout>
@@ -91,6 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Phone"
+                android:fontFamily="sans-serif-condensed"
                 android:inputType="phone" />
 
         </android.support.design.widget.TextInputLayout>
@@ -113,6 +118,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="REGISTER"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@android:color/white" />
 
             <TextView
@@ -127,6 +133,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="CLEAR"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </RelativeLayout>

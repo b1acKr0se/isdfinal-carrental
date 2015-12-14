@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="4dp"
         android:text="Product name"
+        android:fontFamily="sans-serif-condensed"
         android:textColor="#80000000"
         android:textSize="14sp" />
 
@@ -15,6 +16,7 @@
         android:id="@+id/product_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
         android:lines="1"
         android:maxLines="1"
         android:minLines="1"/>
@@ -25,6 +27,7 @@
         android:paddingBottom="4dp"
         android:layout_marginTop="4dp"
         android:text="Description"
+        android:fontFamily="sans-serif-condensed"
         android:textColor="#80000000"
         android:textSize="14sp" />
 
@@ -32,6 +35,7 @@
         android:id="@+id/product_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
         android:lines="7"
         android:maxLines="7"
         android:minLines="7"
@@ -44,6 +48,7 @@
         android:paddingBottom="4dp"
         android:layout_marginTop="4dp"
         android:text="Price per day"
+        android:fontFamily="sans-serif-condensed"
         android:textColor="#80000000"
         android:textSize="14sp" />
 
@@ -51,6 +56,7 @@
         android:id="@+id/product_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
         android:lines="1"
         android:maxLines="1"
         android:minLines="1"

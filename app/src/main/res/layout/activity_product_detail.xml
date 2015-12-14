@@ -41,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
+                android:fontFamily="sans-serif-condensed"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -66,6 +67,7 @@
                 android:padding="8dp"
                 android:background="@drawable/price_holder"
                 android:text="546345 vnd per day"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@android:color/white"
                 android:layout_gravity="center_horizontal"
                 android:textSize="18sp" />
@@ -95,6 +97,7 @@
                             android:layout_height="match_parent"
                             android:paddingRight="4dp"
                             android:text="Add to favorite"
+                            android:fontFamily="sans-serif-condensed"
                             android:gravity="center"
                             android:textSize="18sp"/>
 
@@ -119,6 +122,7 @@
                         android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
                         android:textSize="18sp"
                         android:text="546345234234" />
 

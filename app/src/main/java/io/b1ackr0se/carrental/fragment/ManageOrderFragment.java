@@ -206,6 +206,23 @@ public class ManageOrderFragment extends Fragment implements ManageOrderAdapter.
         recyclerView.setAdapter(adapter);
     }
 
+    private void sendMessage(String id, Product product, boolean accept) {
+        if (CustomApplication.userId != null) {
+            ParseObject object = new ParseObject("Notification");
+            object.put("SenderId", CustomApplication.userId);
+            object.put("ReceiverId", id);
+            object.put("SenderName", ((MainActivity) context).getLoggedInName());
+            object.put("Title", "System message");
+            object.put("Date", System.currentTimeMillis());
+            if (accept)
+                object.put("Content", "A recent order of the product <b>" + product.getName() + "</b> of yours have been delivered. Thanks for choosing our service!");
+            else
+                object.put("Content", "A recent order of the product <b>" + product.getName() + "</b> of yours have been denied by the admin. Please validate" +
+                        "the information and resend the order. Sorry for the inconvenience!");
+            object.saveEventually();
+        }
+
+    }
 
     @Override
     public void onAcceptClick(View view, final Order o, final int position) {
@@ -233,6 +250,7 @@ public class ManageOrderFragment extends Fragment implements ManageOrderAdapter.
                                     }
                                 }
                             });
+                            sendMessage(o.getUserId(), o.getProduct(), true);
                         }
                     })
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -272,6 +290,7 @@ public class ManageOrderFragment extends Fragment implements ManageOrderAdapter.
                                     }
                                 }
                             });
+                            sendMessage(o.getUserId(), o.getProduct(), false);
                         }
                     })
                     .onNegative(new MaterialDialog.SingleButtonCallback() {

@@ -12,6 +12,12 @@
             android:title="Explore" />
 
         <item
+            android:id="@+id/drawer_notification"
+            android:checked="true"
+            android:icon="@drawable/ic_email_grey600_24dp"
+            android:title="Notification" />
+
+        <item
             android:id="@+id/drawer_favorite"
             android:icon="@drawable/ic_heart_grey600_24dp"
             android:title="Favorite" />
@@ -31,12 +37,6 @@
             android:id="@+id/drawer_manage_user"
             android:icon="@drawable/ic_account_multiple_grey600_24dp"
             android:title="Manage users"
-            android:visible="false"/>
-
-        <item
-            android:id="@+id/drawer_manage_category"
-            android:icon="@drawable/ic_folder_multiple_grey600_24dp"
-            android:title="Manage categories"
             android:visible="false"/>
 
         <item

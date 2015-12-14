@@ -122,6 +122,7 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="2003 Chevrolet Suburban 1500"
+                        android:fontFamily="sans-serif-condensed"
                         android:textColor="#000000"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -138,6 +139,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Days"
+                                android:fontFamily="sans-serif-condensed"
                                 android:textColor="#80000000"
                                 android:textSize="14sp" />
 
@@ -145,6 +147,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Total price"
+                                android:fontFamily="sans-serif-condensed"
                                 android:textColor="#80000000"
                                 android:textSize="14sp" />
                         </TableRow>
@@ -157,6 +160,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="3"
                                 android:textColor="#000000"
+                                android:fontFamily="sans-serif-condensed"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
 
@@ -165,6 +169,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="10.000.000"
+                                android:fontFamily="sans-serif-condensed"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />

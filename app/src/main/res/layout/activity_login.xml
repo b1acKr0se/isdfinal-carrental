@@ -22,7 +22,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 android:theme="@style/ToolbarStyle"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                android:fontFamily="sans-serif-condensed"/>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab_layout"
@@ -32,6 +33,7 @@
                 app:tabMode="fixed"
                 android:elevation="2dp"
                 app:tabIndicatorColor="@android:color/white"
+                android:fontFamily="sans-serif-condensed"
                 style="@style/MyCustomTabLayout"/>
 
         </android.support.design.widget.AppBarLayout>
