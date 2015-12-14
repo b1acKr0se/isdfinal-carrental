@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="56dp">
+    android:layout_height="72dp">
 
     <com.daimajia.swipe.SwipeLayout xmlns:swipe="http://schemas.android.com/apk/res-auto"
         android:id="@+id/swipe"
@@ -11,20 +11,21 @@
         swipe:rightEdgeSwipeOffset="0dp">
 
         <FrameLayout
-            android:layout_width="50dp"
-            android:layout_height="56dp"
+            android:layout_width="60dp"
+            android:layout_height="72dp"
             android:gravity="center"
             android:tag="Bottom3">
 
             <FrameLayout
                 android:id="@+id/ban_button"
-                android:layout_width="50dp"
-                android:layout_height="56dp"
-                android:layout_gravity="end"
+                android:layout_width="60dp"
+                android:layout_height="72dp"
+                android:layout_gravity="end|center_vertical"
                 android:background="@color/red"
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
+                    android:id="@+id/ban_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -36,7 +37,9 @@
         <FrameLayout
             android:id="@+id/user_info"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="72dp"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground">
 
             <ImageView
                 android:layout_width="41dp"
@@ -46,15 +49,30 @@
                 android:layout_marginStart="16dp"
                 android:src="@drawable/avatar" />
 
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:paddingLeft="72dp"
-                android:text="Bruce Wayne"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:orientation="vertical"
+                android:paddingLeft="72dp">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bruce Wayne"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/user_join_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Days"
+                    android:textColor="#80000000"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
         </FrameLayout>
     </com.daimajia.swipe.SwipeLayout>
 

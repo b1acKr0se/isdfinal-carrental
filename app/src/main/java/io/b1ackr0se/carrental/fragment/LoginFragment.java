@@ -23,6 +23,7 @@ import com.parse.ParseQuery;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.b1ackr0se.carrental.R;
+import io.b1ackr0se.carrental.application.CustomApplication;
 import io.b1ackr0se.carrental.util.Utility;
 
 /**
@@ -97,14 +98,18 @@ public class LoginFragment extends Fragment {
             public void done(ParseObject object, ParseException e) {
                 if(progressDialog.isShowing()) progressDialog.dismiss();
                 if (e == null) {
-                    Utility.showMessage(context, "Login successfully!");
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("email", email);
-                    returnIntent.putExtra("name", object.getString("userName"));
-                    returnIntent.putExtra("id", object.getObjectId());
-                    returnIntent.putExtra("type", object.getInt("Type"));
-                    getActivity().setResult(Activity.RESULT_OK, returnIntent);
-                    getActivity().finish();
+                    if(object.getInt("Status") == CustomApplication.STATUS_NORMAL) {
+                        Utility.showMessage(context, "Login successfully!");
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("email", email);
+                        returnIntent.putExtra("name", object.getString("userName"));
+                        returnIntent.putExtra("id", object.getObjectId());
+                        returnIntent.putExtra("type", object.getInt("Type"));
+                        getActivity().setResult(Activity.RESULT_OK, returnIntent);
+                        getActivity().finish();
+                    } else {
+                        Utility.showMessage(context, "Your account was banned by the admin!");
+                    }
                 } else {
                     e.printStackTrace();
                     Utility.showMessage(context, "An error has happened, please try again.");

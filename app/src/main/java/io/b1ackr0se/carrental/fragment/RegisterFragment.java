@@ -13,14 +13,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -84,6 +81,7 @@ public class RegisterFragment extends Fragment {
         object.put("Phone", phone);
         object.put("Type", CustomApplication.TYPE_USER);
         object.put("Status", CustomApplication.STATUS_NORMAL);
+        object.put("JoinDate", System.currentTimeMillis());
         object.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

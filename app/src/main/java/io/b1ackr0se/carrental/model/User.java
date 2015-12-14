@@ -8,6 +8,7 @@ public class User {
     private String email;
     private String phone;
     private String address;
+    private long joinDate;
     private int type;
     private int status;
 
@@ -57,6 +58,14 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public long getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(long joinDate) {
+        this.joinDate = joinDate;
     }
 
     public int getType() {

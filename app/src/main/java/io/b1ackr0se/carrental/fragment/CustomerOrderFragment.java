@@ -101,39 +101,42 @@ public class CustomerOrderFragment extends Fragment implements CustomerOrderAdap
                     productQuery.findInBackground(new FindCallback<ParseObject>() {
                         @Override
                         public void done(List<ParseObject> objects, ParseException e) {
-                            ((MainActivity) context).hideLoading(false);
                             if (e == null) {
-                                for (int i = objects.size() - 1, j = 0; i >= 0; i--, j++) {
-                                    ParseObject object = objects.get(i);
-                                    int id = object.getInt("productId");
-                                    String name = object.getString("Name");
-                                    String description = object.getString("Description");
-                                    int price = object.getInt("Price");
-                                    int category = object.getInt("CategoryId");
-                                    ArrayList<String> list = new ArrayList<>();
-                                    String image = object.getParseFile("Image").getUrl();
-                                    String imageUrl = Uri.parse(image).toString();
-                                    list.add(imageUrl);
-                                    Product product = new Product();
-                                    product.setId(id);
-                                    product.setName(name);
-                                    product.setDescription(description.replaceAll("(?m)^[ \t]*\r?\n", ""));
-                                    product.setPrice(price);
-                                    product.setCategory(category);
-                                    product.setImages(list);
+                                if(objects.size() == 0) ((MainActivity) context).hideLoading(true);
+                                else {
+                                    ((MainActivity) context).hideLoading(false);
+                                    for (int i = objects.size() - 1, j = 0; i >= 0; i--, j++) {
+                                        ParseObject object = objects.get(i);
+                                        int id = object.getInt("productId");
+                                        String name = object.getString("Name");
+                                        String description = object.getString("Description");
+                                        int price = object.getInt("Price");
+                                        int category = object.getInt("CategoryId");
+                                        ArrayList<String> list = new ArrayList<>();
+                                        String image = object.getParseFile("Image").getUrl();
+                                        String imageUrl = Uri.parse(image).toString();
+                                        list.add(imageUrl);
+                                        Product product = new Product();
+                                        product.setId(id);
+                                        product.setName(name);
+                                        product.setDescription(description.replaceAll("(?m)^[ \t]*\r?\n", ""));
+                                        product.setPrice(price);
+                                        product.setCategory(category);
+                                        product.setImages(list);
 
-                                    for (int x = 0; x < orderList.size(); x++) {
-                                        Order order = orderList.get(x);
-                                        if (order.getProductId() == id) {
-                                            order.setProduct(product);
-                                            break;
+                                        for (int x = 0; x < orderList.size(); x++) {
+                                            Order order = orderList.get(x);
+                                            if (order.getProductId() == id) {
+                                                order.setProduct(product);
+                                                break;
+                                            }
                                         }
                                     }
+                                    adapter = new CustomerOrderAdapter(context, orderList);
+                                    adapter.setOnOrderClickListener(CustomerOrderFragment.this);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                                    recyclerView.setAdapter(adapter);
                                 }
-                                adapter = new CustomerOrderAdapter(context, orderList);
-                                adapter.setOnOrderClickListener(CustomerOrderFragment.this);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                                recyclerView.setAdapter(adapter);
                             } else {
                                 ((MainActivity) context).hideLoading(true);
                             }
@@ -222,7 +225,7 @@ public class CustomerOrderFragment extends Fragment implements CustomerOrderAdap
     }
 
     private void showEditDialog(final int position) {
-        order = orderList.get(position-1);
+        order = orderList.get(position);
         final Product product = order.getProduct();
         MaterialDialog dialog = new MaterialDialog.Builder(context)
                 .title("Edit your order")

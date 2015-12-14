@@ -199,7 +199,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                         object.put("UserId", CustomApplication.userId);
                         object.put("Price", (seekBar.getProgress()+1)*product.getPrice());
                         object.put("Days", seekBar.getProgress()+1);
-                        object.put("Status", 0);
+                        object.put("Status", CustomApplication.ORDER_STATUS_PENDING);
+                        object.put("Date", System.currentTimeMillis());
                         object.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {

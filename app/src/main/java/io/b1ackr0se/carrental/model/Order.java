@@ -5,6 +5,7 @@ public class Order {
     private int price;
     private int days;
     private int status;
+    private long date;
     private int productId;
     private String userId;
     private User user;
@@ -40,6 +41,14 @@ public class Order {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 
     public User getUser() {

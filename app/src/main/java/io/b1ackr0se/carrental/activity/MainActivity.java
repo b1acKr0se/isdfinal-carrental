@@ -16,6 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import butterknife.Bind;
@@ -25,6 +30,7 @@ import io.b1ackr0se.carrental.application.CustomApplication;
 import io.b1ackr0se.carrental.fragment.AdminProductFragment;
 import io.b1ackr0se.carrental.fragment.CustomerOrderFragment;
 import io.b1ackr0se.carrental.fragment.FavoriteFragment;
+import io.b1ackr0se.carrental.fragment.ManageOrderFragment;
 import io.b1ackr0se.carrental.fragment.ManageUserFragment;
 import io.b1ackr0se.carrental.fragment.ProductFragment;
 import io.b1ackr0se.carrental.util.Utility;
@@ -62,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         CustomApplication.userId = sharedPreferences.getString("id", null);
 
-        setupDrawerLayout();
+        validateLoginCredentials();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 loginControl.setVisibility(View.VISIBLE);
                 logoutButton.setVisibility(View.GONE);
                 Utility.showMessage(MainActivity.this, "You have logged out!");
+                setLayout(CustomApplication.userType);
             }
         });
 
@@ -102,6 +109,39 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
         }
+    }
+
+    private void validateLoginCredentials() {
+        if (CustomApplication.userId != null) {
+            final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                    .progress(true, 100)
+                    .content("Validating your login credentials...")
+                    .cancelable(false)
+                    .build();
+            dialog.show();
+            ParseQuery<ParseObject> query = new ParseQuery<>("User");
+            query.getInBackground(CustomApplication.userId, new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject object, ParseException e) {
+                    if (dialog.isShowing())
+                        dialog.dismiss();
+                    if (e == null) {
+                        if (object.getInt("Status") == CustomApplication.STATUS_BANNED) {
+                            removeCredentials();
+                            Utility.showMessage(MainActivity.this, "Your account was banned by the admin!");
+                        } else {
+                            Utility.showMessage(MainActivity.this, "Login successfully!");
+                        }
+                        setupDrawerLayout();
+                    } else {
+                        removeCredentials();
+                        setupDrawerLayout();
+                        Utility.showMessage(MainActivity.this, "An error happened when validating your login!");
+                    }
+                }
+            });
+        } else
+            setupDrawerLayout();
     }
 
     private void loadProduct() {
@@ -149,6 +189,15 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Users");
     }
 
+    private void loadManageOrder() {
+        ManageOrderFragment fragment = new ManageOrderFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content, fragment);
+        fragmentTransaction.commit();
+        setTitle("Orders");
+    }
+
     public void showLoading() {
         progressBar.setVisibility(View.VISIBLE);
         emptyView.setVisibility(View.INVISIBLE);
@@ -184,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
                         loadProduct();
                         break;
                     case R.id.drawer_favorite:
-                        loadUserList();
+                        loadFavorite();
                         break;
                     case R.id.drawer_cart:
                         loadCustomerOrder();
@@ -198,6 +247,18 @@ public class MainActivity extends AppCompatActivity {
 //                            }
 //                        }, 200);
                         break;
+                    case R.id.drawer_manage_user:
+                        loadUserList();
+                        break;
+                    case R.id.drawer_manage_product:
+                        loadAdminProduct();
+                        break;
+                    case R.id.drawer_manage_orders:
+                        loadManageOrder();
+                        break;
+                    case R.id.drawer_manage_category:
+                        break;
+
                 }
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
@@ -293,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.drawer_favorite).setVisible(true);
                 menu.findItem(R.id.drawer_cart).setVisible(true);
                 menu.findItem(R.id.drawer_manage_product).setVisible(false);
-                menu.findItem(R.id.drawer_manage_orders).setVisible(false);
+                menu.findItem(R.id.drawer_manage_user).setVisible(false);
                 menu.findItem(R.id.drawer_manage_category).setVisible(false);
                 menu.findItem(R.id.drawer_manage_orders).setVisible(false);
                 menu.findItem(R.id.drawer_view_report).setVisible(false);
@@ -304,17 +365,18 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.drawer_favorite).setVisible(false);
                 menu.findItem(R.id.drawer_cart).setVisible(false);
                 menu.findItem(R.id.drawer_manage_product).setVisible(true);
-                menu.findItem(R.id.drawer_manage_orders).setVisible(true);
+                menu.findItem(R.id.drawer_manage_user).setVisible(true);
                 menu.findItem(R.id.drawer_manage_category).setVisible(true);
                 menu.findItem(R.id.drawer_manage_orders).setVisible(true);
                 menu.findItem(R.id.drawer_view_report).setVisible(true);
+                loadAdminProduct();
                 break;
             default:
                 menu.findItem(R.id.drawer_explore).setVisible(true);
                 menu.findItem(R.id.drawer_favorite).setVisible(false);
                 menu.findItem(R.id.drawer_cart).setVisible(false);
                 menu.findItem(R.id.drawer_manage_product).setVisible(false);
-                menu.findItem(R.id.drawer_manage_orders).setVisible(false);
+                menu.findItem(R.id.drawer_manage_user).setVisible(false);
                 menu.findItem(R.id.drawer_manage_category).setVisible(false);
                 menu.findItem(R.id.drawer_manage_orders).setVisible(false);
                 menu.findItem(R.id.drawer_view_report).setVisible(false);
